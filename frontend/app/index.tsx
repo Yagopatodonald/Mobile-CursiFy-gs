@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Animated,
+  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -75,15 +76,16 @@ export default function Index() {
   const [feedback, setFeedback] = useState("");
 
   useEffect(() => {
+    const enableNativeDriver = Platform.OS !== "web";
     Animated.timing(fadeAnim, {
       toValue: 0,
       duration: 100,
-      useNativeDriver: true,
+      useNativeDriver: enableNativeDriver,
     }).start(() => {
       Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 220,
-        useNativeDriver: true,
+        useNativeDriver: enableNativeDriver,
       }).start();
     });
   }, [activeTab, selectedCourse, fadeAnim]);
